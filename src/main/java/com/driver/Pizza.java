@@ -1,5 +1,4 @@
 package com.driver;
-
 public class Pizza {
     private static final int VEG_BASE_PRICE = 300;
     private static final int NON_VEG_BASE_PRICE = 400;
@@ -15,17 +14,17 @@ public class Pizza {
     private boolean extraCheeseAdded;
     private boolean extraToppingsAdded;
 
-    public Pizza(Boolean isVeg){
+    public Pizza(Boolean isVeg) {
         this.isVeg = isVeg;
         this.price = isVeg ? VEG_BASE_PRICE : NON_VEG_BASE_PRICE;
         this.bill = "Base Price Of The Pizza: " + this.price;
     }
 
-    public int getPrice(){
+    public int getPrice() {
         return this.price;
     }
 
-    public void addExtraCheese(){
+    public void addExtraCheese() {
         if (!extraCheeseAdded) {
             this.price += EXTRA_CHEESE_PRICE;
             this.bill += "\nExtra Cheese Added: " + EXTRA_CHEESE_PRICE;
@@ -33,16 +32,17 @@ public class Pizza {
         }
     }
 
-    public void addExtraToppings(){
+    public void addExtraToppings() {
         if (!extraToppingsAdded) {
             String extraToppingsLabel = isVeg ? "Extra Toppings (Veg) Added" : "Extra Toppings (Non-Veg) Added";
-            this.price += isVeg ? VEG_EXTRA_TOPPINGS_PRICE : NON_VEG_EXTRA_TOPPINGS_PRICE;
-            this.bill += "\n" + extraToppingsLabel + ": " + (isVeg ? VEG_EXTRA_TOPPINGS_PRICE : NON_VEG_EXTRA_TOPPINGS_PRICE);
+            int extraToppingsPrice = isVeg ? VEG_EXTRA_TOPPINGS_PRICE : NON_VEG_EXTRA_TOPPINGS_PRICE;
+            this.price += extraToppingsPrice;
+            this.bill += "\n" + extraToppingsLabel + ": " + extraToppingsPrice;
             extraToppingsAdded = true;
         }
     }
 
-    public void addTakeaway(){
+    public void addTakeaway() {
         if (!this.bill.contains("Paperbag Added")) {
             this.price += PAPER_BAG_PRICE;
             this.bill += "\nPaperbag Added: " + PAPER_BAG_PRICE;
@@ -50,20 +50,6 @@ public class Pizza {
     }
 
     public String getBill() {
-        StringBuilder billBuilder = new StringBuilder(this.bill);
-
-        if (this.bill.contains("Extra Cheese Added")) {
-            billBuilder.append("\nExtra Cheese Added: ").append(EXTRA_CHEESE_PRICE);
-        }
-
-        if (this.bill.contains("Extra Toppings Added")) {
-            String extraToppingsLabel = isVeg ? "Extra Toppings (Veg) Added" : "Extra Toppings (Non-Veg) Added";
-            billBuilder.append("\n").append(extraToppingsLabel).append(": ").append(isVeg ? VEG_EXTRA_TOPPINGS_PRICE : NON_VEG_EXTRA_TOPPINGS_PRICE);
-        }
-
-        billBuilder.append("\nTotal Price: ").append(this.price);
-
-        return billBuilder.toString();
+        return this.bill + "\nTotal Price: " + this.price;
     }
-
 }
