@@ -50,8 +50,9 @@ public class Pizza {
     }
 
     public String getBill(){
-        String totalLine = "\nTotal Price: " + this.price;
+        String totalLine = "\nTotal Price: [" + this.price + "]";
         return this.bill + totalLine;
     }
+
 
 }
