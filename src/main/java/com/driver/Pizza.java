@@ -1,55 +1,75 @@
 package com.driver;
+
 public class Pizza {
-    private static final int VEG_BASE_PRICE = 300;
-    private static final int NON_VEG_BASE_PRICE = 400;
-    private static final int EXTRA_CHEESE_PRICE = 80;
-    private static final int VEG_EXTRA_TOPPINGS_PRICE = 70;
-    private static final int NON_VEG_EXTRA_TOPPINGS_PRICE = 120;
-    private static final int PAPER_BAG_PRICE = 20;
-
     private int price;
-    private Boolean isVeg;
-    private String bill;
+    private int basePrice; //price without extra additions
+    private Boolean isExtraCheese = false;
+    private Boolean isToppings = false;
+    private Boolean isTakeAway = false;
+    int takeAwayPrice = 20;
+    int extraCheesePrice = 80;
+    int extraToppingsPrice = 70;
 
-    private boolean extraCheeseAdded;
-    private boolean extraToppingsAdded;
-
-    public Pizza(Boolean isVeg) {
-        this.isVeg = isVeg;
-        this.price = isVeg ? VEG_BASE_PRICE : NON_VEG_BASE_PRICE;
-        this.bill = "Base Price Of The Pizza: " + this.price;
-    }
-
-    public int getPrice() {
-        return this.price;
-    }
-
-    public void addExtraCheese() {
-        if (!extraCheeseAdded) {
-            this.price += EXTRA_CHEESE_PRICE;
-            this.bill += "\nExtra Cheese Added: " + EXTRA_CHEESE_PRICE;
-            extraCheeseAdded = true;
+    public Pizza(Boolean isVeg){
+        //true for a vegetable pizza
+        if(isVeg){
+            this.price = 300;
+        }else{
+            this.price = 400;
         }
+        basePrice = price;
     }
 
-    public void addExtraToppings() {
-        if (!extraToppingsAdded) {
-            String extraToppingsLabel = isVeg ? "Extra Toppings (Veg) Added" : "Extra Toppings (Non-Veg) Added";
-            int extraToppingsPrice = isVeg ? VEG_EXTRA_TOPPINGS_PRICE : NON_VEG_EXTRA_TOPPINGS_PRICE;
+    public int getBasePrice(){
+        return this.basePrice;
+    }//for future use
+
+    public void addExtraCheese(){
+        if(!isExtraCheese) {
+            System.out.println("+ Added extra cheese!: " + extraCheesePrice);
+            this.price += extraCheesePrice;
+        }else{
+            System.out.println("!* Extra cheese already added!");
+        }
+        isExtraCheese = true;
+    }
+
+    public void addExtraToppings(){
+        if(!isToppings) {
+            System.out.println("+ Added extra toppings!: " + extraToppingsPrice);
             this.price += extraToppingsPrice;
-            this.bill += "\n" + extraToppingsLabel + ": " + extraToppingsPrice;
-            extraToppingsAdded = true;
+        }else {
+            System.out.println("*! Extra toppings already added!");
         }
+        isToppings = true;
     }
 
-    public void addTakeaway() {
-        if (!this.bill.contains("Paperbag Added")) {
-            this.price += PAPER_BAG_PRICE;
-            this.bill += "\nPaperbag Added: " + PAPER_BAG_PRICE;
+    public void takeAway(){
+        if(!isTakeAway) {
+            System.out.println("+ Takeaway order for: " + takeAwayPrice);
+            this.price += takeAwayPrice;
+        }else{
+            System.out.println("*! Takeaway already selected!");
         }
+        isTakeAway = true;
     }
 
-    public String getBill() {
-        return this.bill + "\nTotal Price: " + this.price;
+    public void getBill(){
+        System.out.println();
+        System.out.println("-------------Bill-----------------");
+        System.out.println("Base pizza: " + basePrice);
+        if(isExtraCheese){
+            System.out.println("Extra cheese: " + extraCheesePrice);
+        }
+        if(isToppings){
+            System.out.println("Extra toppings: " + extraToppingsPrice );
+        }
+        if(isTakeAway){
+            System.out.println("Takeaway services: " + takeAwayPrice );
+        }
+        System.out.println("--------------TOTAL---------------");
+        System.out.println(this.price);
+        System.out.println("----------------------------------");
+        System.out.println();
     }
 }
